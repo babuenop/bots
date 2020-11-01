@@ -49,7 +49,6 @@ function callSendApi(response) {
       "uri": "https://graph.facebook.com/me/messages",
       "qs" : {
           "access_token": access_token
-        
       },
       'method': "POST",
       "json": response
@@ -63,8 +62,6 @@ function callSendApi(response) {
     }
     )
   }
-
-
 
 app.listen(app.get('port'), function(){
     console.log('Nuestro servidor esta funcionando correctamente', app.get('port'))
