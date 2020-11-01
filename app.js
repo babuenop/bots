@@ -50,14 +50,15 @@ function callSendApi(response) {
       "qs" : {
           "access_token": access_token
       },
-      'method': "POST",
+      "method": "POST",
       "json": response
     },
+    
     function(err) {
       if(err) {
-        console.log('ha ocurrido un error')
+        console.log('Ha ocurrido un error')
       } else {
-        console.log('mensaje enviado')
+        console.log('Mensaje enviado')
       }
     }
     )
