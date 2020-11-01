@@ -46,11 +46,11 @@ function handleMessage(event){
 
 function callSendApi(response) {
     request({
-      "uri": "https://graph.facebook.com/me/messages?access_token=${access_token}",
-    //   "qs" : {
-    //       "access_token": access_token
+      "uri": "https://graph.facebook.com/me/messages",
+      "qs" : {
+          "access_token": access_token
         
-    //   },
+      },
       'method': "POST",
       "json": response
     },
