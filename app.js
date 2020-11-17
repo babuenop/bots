@@ -3,7 +3,7 @@
 const express = require('express')
 const bodyParser = require ('body-parser')
 const request = require ('request')
-const accessToken = "EAAFAlLslbu0BAInckfUZA0rIK1KNdOR5qvFsEtF8aDpvpmjh4unX9fWS4iYcmHRcJAsPVJV7he0dfY0Dm4hKQlOWoaRnPxOmyjZCGEWiDzryaZBMgqqTZBZA94Mh2cKDuDkZB7bTJu8f1aZALBB2OS6K80gXUmpvzyRJY9n18pDtgZDZD"
+const access_token = "EAAFAlLslbu0BAH0iEHlU52vt6dKjrYMe8QmSXGCtNZC8jmBuabmkR8DoXbM6C0wmxTtmvPG2tBA6yBYsUrPV7VqwzpTPvRMoz4v3U7RPgn36nPf1DpmrZCu5XLYgZBKKzNhDteZA3sZBjmi21tgKSgi7mIiM4hBt1AER0MjKeVAZDZD"
 const app = express()
 app.set('port', 5000)
 app.use(bodyParser.json())
@@ -25,6 +25,7 @@ app.post('/webhook/', function(req, response){
     if (webhook_event.messaging){
         webhook_event.messaging.forEach(event =>{
             console.log(event);
+            handleMessage (event)
         })
     }
     response.sendStatus(200); 
@@ -34,26 +35,26 @@ function handleMessage(event){
     const senderId = event.sender.id;
     const messageText = event.message.text;
     const messageData = {
-        recipient:{
-            id: senderId
-        },
-        message:{
-            text: messageText
-        }
+      recipient:{
+        id: senderId
+      },
+      message:{
+        text: messageText
+      }
     }
-    callSendApi(messageData)
-}
+    callSendApi(messageData);
+  }
 
 function callSendApi(response) {
     request({
-      "uri": "https://graph.facebook.com/me/messages",
+      "uri": "https://graph.facebook.com/me/messages/" ,
       "qs" : {
           "access_token": access_token
       },
-      "method": "POST",
+      "method": "POST" ,
       "json": response
     },
-    
+
     function(err) {
       if(err) {
         console.log('Ha ocurrido un error')
