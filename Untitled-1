@@ -1,9 +1,5 @@
 
-curl -X POST -H "Content-Type: aplicattion/json" -d '{
-    "get_started":{"payload":
-        "GET_STARTED_BETTOBOT"
-    }
-}' "https://graph.facebook.com/v2.6/me/messenger_profile?access_token=EAAFAlLslbu0BAH0iEHlU52vt6dKjrYMe8QmSXGCtNZC8jmBuabmkR8DoXbM6C0wmxTtmvPG2tBA6yBYsUrPV7VqwzpTPvRMoz4v3U7RPgn36nPf1DpmrZCu5XLYgZBKKzNhDteZA3sZBjmi21tgKSgi7mIiM4hBt1AER0MjKeVAZDZD"
+// Este codigo habilita el boton de inicio en el Menu de Fcebook
 
 curl -X POST -H "Content-Type: application/json" -d '{ 
   "get_started":{
@@ -11,19 +7,19 @@ curl -X POST -H "Content-Type: application/json" -d '{
   }
 }' "https://graph.facebook.com/v2.6/me/messenger_profile?access_token=EAAFAlLslbu0BAH0iEHlU52vt6dKjrYMe8QmSXGCtNZC8jmBuabmkR8DoXbM6C0wmxTtmvPG2tBA6yBYsUrPV7VqwzpTPvRMoz4v3U7RPgn36nPf1DpmrZCu5XLYgZBKKzNhDteZA3sZBjmi21tgKSgi7mIiM4hBt1AER0MjKeVAZDZD"
 
-
+//Activamos el mensaje del saludo.
 curl -X POST -H "Content-Type: application/json" -d '{
-  "get_started": {"payload": "GET_STARTED_GDENPIZZA"},
   "greeting": [
     {
       "locale":"default",
-      "text":"Hola {{user_first_name}}, soy GdenPizza y te recomiendo las mejores pizza"
-    }, {
+      "text":"Hola {{user_first_name}}, Soy PugPizza y te recomiendo las mejores pizza"
+    }, 
+    {
       "locale":"en_US",
       "text":"hi {{use_first_name}}"
-    }
-  ]
-}' "https://graph.facebook.com/v2.6/me/messenger_profile?access_token="EAAFAlLslbu0BAH0iEHlU52vt6dKjrYMe8QmSXGCtNZC8jmBuabmkR8DoXbM6C0wmxTtmvPG2tBA6yBYsUrPV7VqwzpTPvRMoz4v3U7RPgn36nPf1DpmrZCu5XLYgZBKKzNhDteZA3sZBjmi21tgKSgi7mIiM4hBt1AER0MjKeVAZDZD"
+    } 
+    ]
+}' "https://graph.facebook.com/v2.6/me/messenger_profile?access_token=EAAFAlLslbu0BAH0iEHlU52vt6dKjrYMe8QmSXGCtNZC8jmBuabmkR8DoXbM6C0wmxTtmvPG2tBA6yBYsUrPV7VqwzpTPvRMoz4v3U7RPgn36nPf1DpmrZCu5XLYgZBKKzNhDteZA3sZBjmi21tgKSgi7mIiM4hBt1AER0MjKeVAZDZD"
 
 
 curl - X POST - H "Content-Type: application/json" - d '{

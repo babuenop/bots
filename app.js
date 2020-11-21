@@ -24,27 +24,53 @@ app.post('/webhook/', function(req, response){
     const webhook_event = req.body.entry[0];
     if (webhook_event.messaging){
         webhook_event.messaging.forEach(event =>{
-            console.log(event);
-            handleMessage (event)
+            handleEvent(event.senderId, event)
+            // handleMessage (event) - la usabamos cuando estabamos enviando el mensaje que escribia el usuario.
         })
     }
-    response.sendStatus(200); 
+    response.sendStatus(200);
 })
 
-function handleMessage(event){
+function handleEvent(senderId,event){
+  if(event.message){
+    handleMessage(senderId, event.message)
+  }
+}
+
+function handleMessage(senderId, event){
+  if(event.text){
+    defaultMessage(senderId)
+  }
+}
+
+function defaultMessage(senderId){
+  const messageData = {
+    "recipient":{
+      "id":senderId
+    },
+      "message": {
+        "text":"Hola soy un bot de messenger y te invito a utilizar nuestro menu"
+      }
+    } 
+    callSendApi(messageData)
+  }
+
+
+/* Este bloque lo usamos al inicio para el manejo del mensaje inicial
+ function handleMessage(event){
     const senderId = event.sender.id;
     const messageText = event.message.text;
     const messageData = {
       recipient:{
         id: senderId
       },
-      message:{
+      message:{ 
         text: messageText
       }
     }
     callSendApi(messageData);
   }
-
+ */
 function callSendApi(response) {
     request({
       "uri": "https://graph.facebook.com/me/messages/" ,
