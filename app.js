@@ -24,36 +24,65 @@ app.post('/webhook/', function(req, response){
     const webhook_event = req.body.entry[0];
     if (webhook_event.messaging){
         webhook_event.messaging.forEach(event =>{
-            handleEvent(event.senderId, event)
+            handleEvent(event.sender.id, event)
             // handleMessage (event) - la usabamos cuando estabamos enviando el mensaje que escribia el usuario.
         })
     }
     response.sendStatus(200);
 })
-
-function handleEvent(senderId,event){
+function handleEvent(senderId, event){
   if(event.message){
-    handleMessage(senderId, event.message)
+      handleMessage(senderId, event.message)
+  } else if(event.postback){
+    handlePostback(senderId, event.postback.payload)
   }
 }
 
 function handleMessage(senderId, event){
   if(event.text){
-    defaultMessage(senderId)
+      defaultMessage(senderId);
   }
 }
 
-function defaultMessage(senderId){
+function defaultMessage(senderId) {
   const messageData = {
-    "recipient":{
-      "id":senderId
-    },
+      "recipient": {
+          "id": senderId
+      },
       "message": {
-        "text":"Hola soy un bot de messenger y te invito a utilizar nuestro menu"
+          "text": "Hola, soy un bot de messenger y te invito a utilizar nuestro menu"
       }
-    } 
-    callSendApi(messageData)
   }
+  callSendApi(messageData);
+}
+
+function handlePostback(senderId, payload){
+  switch (payload){
+    case "GET_STARTED_BETTOBOT":
+      console.log(payload)
+    break
+  }
+}
+
+function callSendApi(response) {
+  request({
+      "uri": "https://graph.facebook.com/me/messages",
+      "qs": {
+          "access_token": access_token
+      },
+      "method": "POST",
+      "json": response
+  },
+      function (err) {
+          if (err) {
+              console.log('Ha ocurrido un error')
+          } else {
+              console.log('Mensaje enviado')
+          }
+      }
+  )
+}
+
 
 
 /* Este bloque lo usamos al inicio para el manejo del mensaje inicial
@@ -71,25 +100,6 @@ function defaultMessage(senderId){
     callSendApi(messageData);
   }
  */
-function callSendApi(response) {
-    request({
-      "uri": "https://graph.facebook.com/me/messages/" ,
-      "qs" : {
-          "access_token": access_token
-      },
-      "method": "POST" ,
-      "json": response
-    },
-
-    function(err) {
-      if(err) {
-        console.log('Ha ocurrido un error')
-      } else {
-        console.log('Mensaje enviado')
-      }
-    }
-    )
-  } 
 
 app.listen(app.get('port'), function(){
     console.log('Nuestro servidor esta funcionando correctamente', app.get('port'))
