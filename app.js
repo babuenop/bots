@@ -41,6 +41,26 @@ function handleEvent(senderId, event){
 function handleMessage(senderId, event){
   if(event.text){
       defaultMessage(senderId);
+  } else if (event.attachments){
+    handleAttacment(senderId,event)
+  }
+}
+
+function handleAttacment(senderId, event){
+  let attachment_type=event.attachments[0].type
+  switch(attachment_type){
+    case "image":
+      console.log(attachment_type)
+      break
+    case "video":
+      console.log(attachment_type)
+      break
+    case "audio":
+      console.log(attachment_type)
+      break
+    case "file":
+      console.log(attachment_type)
+      break
   }
 }
 
@@ -50,9 +70,23 @@ function defaultMessage(senderId) {
           "id": senderId
       },
       "message": {
-          "text": "Hola, soy un bot de messenger y te invito a utilizar nuestro menu"
-      }
+          "text": "Hola, soy un bot de messenger y te invito a utilizar nuestro menu",
+          "quick_replies":[
+            {
+              "content_type": "text",
+              "title":"¿Quieres una pizza?",
+              "payload": "PIZZAS_PAYLOAD",
+              "image_url":"http://example.com/img/red.png"
+            },
+            {
+              "content_type": "text",
+              "title":"Acerca de",
+              "payload": "ABOUT_PAYLOAD"
+            }
+          ]
+        }
   }
+  senderActions(senderId)
   callSendApi(messageData);
 }
 
@@ -62,6 +96,16 @@ function handlePostback(senderId, payload){
       console.log(payload)
     break
   }
+}
+
+function senderActions(senderId){
+  const messageData = {
+    "recipient":{
+      "id": senderId
+    },
+    "sender_action":"typing_on"
+  }
+  callSendApi(messageData)
 }
 
 function callSendApi(response) {
