@@ -1,0 +1,60 @@
+
+/*Este codigo habilita el boton de inicio en el Menu de Fcebook*/
+curl -X POST -H "Content-Type: application/json" -d '{ 
+  "get_started":{
+    "payload":"GET_STARTED_BETTOBOT"
+  }
+}' "https://graph.facebook.com/v2.6/me/messenger_profile?access_token=EAAFAlLslbu0BAH0iEHlU52vt6dKjrYMe8QmSXGCtNZC8jmBuabmkR8DoXbM6C0wmxTtmvPG2tBA6yBYsUrPV7VqwzpTPvRMoz4v3U7RPgn36nPf1DpmrZCu5XLYgZBKKzNhDteZA3sZBjmi21tgKSgi7mIiM4hBt1AER0MjKeVAZDZD"
+
+//Activamos el mensaje del saludo.
+
+curl -X POST -H "Content-Type: application/json" -d '{
+"greeting": [{
+  "locale": "default",
+  "text": "Hola {{user_first_name}} soy Chewiekie y atiendo PugPizza te invito a conocer nuestras geniales 🐶 PugPizzas 🍕.!"
+}, {
+  "locale": "en_US",
+  "text": "Hello {{user_first_name}} soy Chewiekie y atiendo PugPizza te invito a conocer nuestras geniales 🐶 PugPizzas 🍕.!"
+}]
+}
+' "https://graph.facebook.com/v2.6/me/messenger_profile?access_token=EAAFAlLslbu0BAH0iEHlU52vt6dKjrYMe8QmSXGCtNZC8jmBuabmkR8DoXbM6C0wmxTtmvPG2tBA6yBYsUrPV7VqwzpTPvRMoz4v3U7RPgn36nPf1DpmrZCu5XLYgZBKKzNhDteZA3sZBjmi21tgKSgi7mIiM4hBt1AER0MjKeVAZDZD"
+
+
+/Menu persistente
+curl -X POST -H "Content-Type: application/json" -d '{
+  "persistent_menu": [
+    {
+      "locale": "default",
+      "composer_input_disabled": false,
+      "call_to_actions": [
+        {
+          "title": "Ubicación",
+          "type": "postback",
+          "payload": "LOCATION_PAYLOAD"
+        },
+        {
+          "title": "Contacto",
+          "type": "postback",
+          "payload": "CONTACT_PAYLOAD"
+        },
+        {
+          "title": "Pizzas",
+          "type": "postback",
+          "payload": "PIZZAS_PAYLOAD"
+        },
+        {
+          "title": "Bebidas",
+          "type": "postback",
+          "payload": "DRINKS_PAYLOAD"
+        },
+        {
+          "type": "web_url",
+          "title": "Página web",
+          "url": "https://platzi.com",
+          "webview_height_ratio": "full"
+        }
+      ]
+    }
+  ]
+  }' "https://graph.facebook.com/v9.0/me/messenger_profile?access_token=EAAFAlLslbu0BAH0iEHlU52vt6dKjrYMe8QmSXGCtNZC8jmBuabmkR8DoXbM6C0wmxTtmvPG2tBA6yBYsUrPV7VqwzpTPvRMoz4v3U7RPgn36nPf1DpmrZCu5XLYgZBKKzNhDteZA3sZBjmi21tgKSgi7mIiM4hBt1AER0MjKeVAZDZD"
+

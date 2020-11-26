@@ -87,23 +87,72 @@ function defaultMessage(senderId) {
         }
   }
   senderActions(senderId)
-  callSendApi(messageData);
+  callSendApi(messageData)
 }
 
 function handlePostback(senderId, payload){
+  console.log(payload)
   switch (payload){
     case "GET_STARTED_BETTOBOT":
-      console.log(payload)
+    break
+    case "PIZZAS_PAYLOAD":
+      showPizzas(senderId)
     break
   }
 }
 
 function senderActions(senderId){
+  console.log("Ingreso a senderActions")
   const messageData = {
     "recipient":{
       "id": senderId
     },
     "sender_action":"typing_on"
+  }
+  callSendApi(messageData)
+}
+
+function showPizzas(senderId){
+  console.log("==========================> showPizzas <=================================")
+
+  const messageData = {
+    "recipient":{
+      "id": senderId
+    },
+    "message": {
+      "attachment": {
+          "type": "template",
+          "payload": {
+              "template_type": "generic",
+              "elements": [
+                  {
+                      "title": "Peperoni",
+                      "subtitle": "Con todo el sabor del peperoni",
+                      "image_url": "https://www.lavanguardia.com/r/GODO/LV/p5/WebSite/2018/08/08/Recortada/img_cperezg_20171121-130800_imagenes_lv_terceros_istock-521403691-kK6F-U451255839591PkF-992x558@LaVanguardia-Web.jpg",
+                      "buttons": [
+                          {
+                              "type": "postback",
+                              "title": "Elegir Pepperoni",
+                              "payload": "PEPPERONI_PAYLOAD",
+                          }
+                      ]
+                  },
+                  {
+                      "title": "Pollo BBQ",
+                      "subtitle": "Con todo el sabor del BBQ",
+                      "image_url": "https://s3.amazonaws.com/chewiekie/img/productos-pizza-peperoni-champinones.jpg",
+                      "buttons": [
+                          {
+                              "type": "postback",
+                              "title": "Elegir Pollo BBQ",
+                              "payload": "BBQ_PAYLOAD",
+                          }
+                      ]
+                  }
+              ]
+          }
+      }
+  }
   }
   callSendApi(messageData)
 }
@@ -144,6 +193,8 @@ function callSendApi(response) {
     callSendApi(messageData);
   }
  */
+
+
 
 app.listen(app.get('port'), function(){
     console.log('Nuestro servidor esta funcionando correctamente', app.get('port'))
