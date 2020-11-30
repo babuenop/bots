@@ -14,7 +14,7 @@ Un curso completo donde te permite obtener los conocimientos basicos y conocimie
 ## Ejecución en un entorno local
 Obtener el código y ejecutarlo en una máquina local. Necesitarás NodeJS 10.x o una versión más reciente; para consultar tu versión actual, ejecuta el siguiente comando
 
-'''node -v'''
+```node -v```
 
 
 
