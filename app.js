@@ -39,9 +39,13 @@ function handleEvent(senderId, event){
 }
 
 function handleMessage(senderId, event){
-  if(event.text){
-      defaultMessage(senderId);
-  } else if (event.attachments){
+  if(event.text="Sistemas Fotovoltaicos"){
+      sistemaFotovoltaico(senderId)
+  } else if(event.text="Curso Energia Renovable"){
+      cursoEnergia(senderId)
+  } else if(event.text){
+      defaultMessage(senderId)
+  }else if (event.attachments){
     handleAttacment(senderId,event)
   }
 }
@@ -64,19 +68,126 @@ function handleAttacment(senderId, event){
   }
 }
 
-function defaultMessage(senderId) {
+
+function dpcEnergy(senderId) {
+  console.log("Ingreso a default Message")
+  const messageData = {
+      "recipient": {
+          "id": senderId
+      },
+  "messaging_type": "RESPONSE",
+  "message":{
+    "text": "👋 Hola Soy Dayz, La energía solar ☀️ es una fuente de vida y origen de la mayoría de las demás formas de energía en la Tierra​. \n\nTenemos dos tipos de servicios: \n-Sistemas Fotovoltaicos para casas \n-Curso de Energia Renovable. \n\nPor favor selecciona cual deseas conocer:",
+    "quick_replies":[
+      {
+        "content_type":"text",
+        "title":"Sistemas Fotovoltaicos",
+        "payload":"FOTOVOL_PAYLOAD",
+        "image_url":"http://example.com/img/red.png"
+      },{
+        "content_type":"text",
+        "title":"📗Curso Energia Renovable",
+        "payload":"<POSTBACK_PAYLOAD>",
+        "image_url":"http://example.com/img/green.png"
+      }
+    ]
+  }
+}
+  senderActions(senderId)
+  callSendApi(messageData)
+} 
+
+function sistemaFotovoltaico (senderId) {
+  console.log("Ingreso a default Message")
   const messageData = {
       "recipient": {
           "id": senderId
       },
       "message": {
-          "text": "Hola, soy un bot de messenger y te invito a utilizar nuestro menu",
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [
+                    {
+                        "title": "☀️ DPC Energy",
+                        "subtitle": "👋Sistema Fotovoltaico",
+                    
+                        "buttons": [
+                            {
+                              "type": "postback",
+                              "title": "Hacer una cotizacion",
+                              "payload": "COTIZACION_PAYLOAD",
+                          },
+                          {
+                            "type":"phone_number",
+                            "title": "Llamar a un asesor",
+                            "payload": "+50765882509"
+                          }
+                        ]
+                    },
+                ]
+            }
+        }
+      }
+    }
+  senderActions(senderId)
+  callSendApi(messageData)
+} 
+
+function cursoEnergia (senderId) {
+  console.log("Ingreso a default Message")
+  const messageData = {
+      "recipient": {
+          "id": senderId
+      },
+      "message": {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [
+                    {
+                        "title": "☀️ DPC Energy",
+                        "subtitle": "📗Curso Energia Renovable",
+                    
+                        "buttons": [
+                            {
+                              "type": "postback",
+                              "title": "Hacer una cotizacion",
+                              "payload": "COTIZACION_PAYLOAD",
+                          },
+                          {
+                            "type":"phone_number",
+                            "title": "Llamar a un asesor",
+                            "payload": "+50765882509"
+                          }
+                        ]
+                    },
+                ]
+            }
+        }
+      }
+    }
+  senderActions(senderId)
+  callSendApi(messageData)
+} 
+
+
+function defaultMessage(senderId) { 
+  console.log("Ingreso a default Message")
+  const messageData = {
+      "recipient": {
+          "id": senderId
+      },
+      "message": {
+          "text": "Hola, soy Dayz y te invito a utilizar nuestro menu",
           "quick_replies":[
             {
               "content_type": "text",
-              "title":"¿Quieres una pizza?",
-              "payload": "PIZZAS_PAYLOAD",
-              "image_url":"http://example.com/img/red.png"
+              "title":"Quienes Somos",
+              "image_url":"http://example.com/img/red.png",
+              "payload": "DPC_PAYLOAD",
             },
             {
               "content_type": "text",
@@ -94,10 +205,21 @@ function handlePostback(senderId, payload){
   console.log(payload)
   switch (payload){
     case "GET_STARTED_BETTOBOT":
+      showDpc(senderId)
     break
-    case "PIZZAS_PAYLOAD":
-      showPizzas(senderId)
+    case "DPC_PAYLOAD":
+      dpcEnergy(senderId)
     break
+    case "FOTOVOL_PAYLOAD":
+      SistemaFotovoltaico(senderId)
+    break
+    case "COTIZACION_PAYLOAD":
+      
+    break
+    case "CONTACT_PAYLOAD":
+      contactSupport(senderId)
+    break
+    
   }
 }
 
@@ -111,6 +233,51 @@ function senderActions(senderId){
   }
   callSendApi(messageData)
 }
+
+function showDpc(senderId){
+  console.log("==========================> showDPC <=================================")
+
+  const messageData = {
+    "recipient":{
+      "id": senderId
+    },
+    "message": {
+      "attachment": {
+          "type": "template",
+          "payload": {
+              "template_type": "generic",
+              "elements": [
+                  {
+                      "title": "DPC Energy",
+                      "subtitle": "👋Hola, Bienvenido a DPC Energy Empresa renovable para todos.",
+                      "image_url": "https://instagram.fpac1-2.fna.fbcdn.net/v/t51.2885-15/e35/117344835_3476442462368994_7519872707169913172_n.jpg?_nc_ht=instagram.fpac1-2.fna.fbcdn.net&_nc_cat=106&_nc_ohc=gOZ9ZzGZayIAX8MaGKD&tp=1&oh=7398e8889b1f473c47f64f16c5223081&oe=5FED8325",
+                      "buttons": [
+                          {
+                              "type": "postback",
+                              "title": "Nuestros Productos",
+                              "payload": "DPC_PAYLOAD",
+                          },
+                          {
+                            "type": "postback",
+                            "title": "Hacer una cotizacion",
+                            "payload": "COTIZACION_PAYLOAD",
+                        },
+                        {
+                          "type":"phone_number",
+                          "title": "Llamar a un asesor",
+                          "payload": "+50765882509"
+                        }
+                      ]
+                  },
+              ]
+          }
+      }
+  }
+  }
+  callSendApi(messageData)
+}
+
+
 
 function showPizzas(senderId){
   console.log("==========================> showPizzas <=================================")
@@ -156,6 +323,56 @@ function showPizzas(senderId){
   }
   callSendApi(messageData)
 }
+function messageImage (senderId){
+  const messageData = {
+    "recipient":{
+      "id": senderId
+    },
+    "message":{
+      attachment:{
+        "type":"image",
+        "payload":{
+          "url": "https://media.giphy.com/media/1dOIvm5ynwYolB2Xlh/giphy.gif"
+        }
+      }
+    }
+  }
+  callSendApi(messageData)
+}
+
+function showLocation (senderId){
+  const messageData = {
+    "recipient":{
+      "id": semderId
+    }
+    
+  }
+}
+
+function contactSupport(senderId){
+  const messageData={
+    "recipient":{
+      "id": senderId
+    },
+    "message" : {
+      "attachment": {
+        "type":"template",
+        "payload":{
+          "template_type":"button",
+          "text": "Hola este es el canal de soporte, ¿Quieres llamarnos?",
+          "buttons":[
+            {
+              "type":"phone_number",
+              "title": "Llamar a un asesor",
+              "payload": "+50765882509"
+            }
+          ]
+        }
+      }
+    }
+  }
+  callSendApi(messageData)
+}
 
 function callSendApi(response) {
   request({
@@ -191,8 +408,7 @@ function callSendApi(response) {
       }
     }
     callSendApi(messageData);
-  }
- */
+  } */
 
 
 

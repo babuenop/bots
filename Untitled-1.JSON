@@ -7,17 +7,16 @@ curl -X POST -H "Content-Type: application/json" -d '{
 }' "https://graph.facebook.com/v2.6/me/messenger_profile?access_token=EAAFAlLslbu0BAH0iEHlU52vt6dKjrYMe8QmSXGCtNZC8jmBuabmkR8DoXbM6C0wmxTtmvPG2tBA6yBYsUrPV7VqwzpTPvRMoz4v3U7RPgn36nPf1DpmrZCu5XLYgZBKKzNhDteZA3sZBjmi21tgKSgi7mIiM4hBt1AER0MjKeVAZDZD"
 
 //Activamos el mensaje del saludo.
-
 curl -X POST -H "Content-Type: application/json" -d '{
-"greeting": [{
-  "locale": "default",
-  "text": "Hola {{user_first_name}} soy Chewiekie y atiendo PugPizza te invito a conocer nuestras geniales 🐶 PugPizzas 🍕.!"
-}, {
-  "locale": "en_US",
-  "text": "Hello {{user_first_name}} soy Chewiekie y atiendo PugPizza te invito a conocer nuestras geniales 🐶 PugPizzas 🍕.!"
-}]
-}
-' "https://graph.facebook.com/v2.6/me/messenger_profile?access_token=EAAFAlLslbu0BAH0iEHlU52vt6dKjrYMe8QmSXGCtNZC8jmBuabmkR8DoXbM6C0wmxTtmvPG2tBA6yBYsUrPV7VqwzpTPvRMoz4v3U7RPgn36nPf1DpmrZCu5XLYgZBKKzNhDteZA3sZBjmi21tgKSgi7mIiM4hBt1AER0MjKeVAZDZD"
+  "greeting": [{
+    "locale": "default",
+    "text": "Hola {{user_first_name}} soy Dayz y puedo atender tu cotizacion, te invito a conocer nuestros servicios completos"
+  }, {
+    "locale": "en_US",
+    "text": "Hello {{user_first_name}} I am Dayz. I can make your quotation. I invite you to meet our services "
+  }]
+  }
+  ' "https://graph.facebook.com/v2.6/me/messenger_profile?access_token=EAAFAlLslbu0BAH0iEHlU52vt6dKjrYMe8QmSXGCtNZC8jmBuabmkR8DoXbM6C0wmxTtmvPG2tBA6yBYsUrPV7VqwzpTPvRMoz4v3U7RPgn36nPf1DpmrZCu5XLYgZBKKzNhDteZA3sZBjmi21tgKSgi7mIiM4hBt1AER0MjKeVAZDZD"
 
 
 /Menu persistente
@@ -28,9 +27,9 @@ curl -X POST -H "Content-Type: application/json" -d '{
       "composer_input_disabled": false,
       "call_to_actions": [
         {
-          "title": "Ubicación",
+          "title": "DPC Energy",
           "type": "postback",
-          "payload": "LOCATION_PAYLOAD"
+          "payload": "DPC_PAYLOAD"
         },
         {
           "title": "Contacto",
@@ -38,19 +37,14 @@ curl -X POST -H "Content-Type: application/json" -d '{
           "payload": "CONTACT_PAYLOAD"
         },
         {
-          "title": "Pizzas",
+          "title": "Nuestros Productos",
           "type": "postback",
           "payload": "PIZZAS_PAYLOAD"
         },
         {
-          "title": "Bebidas",
-          "type": "postback",
-          "payload": "DRINKS_PAYLOAD"
-        },
-        {
           "type": "web_url",
-          "title": "Página web",
-          "url": "https://platzi.com",
+          "title": "Instagram",
+          "url": "https://www.instagram.com/dpc_energy/",
           "webview_height_ratio": "full"
         }
       ]
