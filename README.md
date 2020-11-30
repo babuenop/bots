@@ -1,5 +1,5 @@
 # Bots
-Este repositorio es el resultado del Curso de Bots con Facebook Messenger en 💚 Platzi
+Este repositorio es el resultado del Curso de Bots con Facebook Messenger en 💚 Platzi https://platzi.com/clases/bots-fb/
 Un curso completo donde te permite obtener los conocimientos basicos y conocimiento basico de cada uno de los componentes de Facebook Messenger. 
 
 ## Como iniciar un proyecto 
@@ -11,10 +11,9 @@ Un curso completo donde te permite obtener los conocimientos basicos y conocimie
 
 *App de Facebook:* contiene la configuración de la app, incluidos los tokens de acceso. Para crear una nueva app, visita https://developers.facebook.com/ y haz clic en Agregar nueva app.
 
-## Ejecución en un entorno local
-Obtener el código y ejecutarlo en una máquina local. Necesitarás NodeJS 10.x o una versión más reciente; para consultar tu versión actual, ejecuta el siguiente comando
+En la pagina de Facebook encuentras toda la documentación asociada a este tema y un ejemplo para probarlo. 
+https://developers.facebook.com/docs/messenger-platform/getting-started/sample-apps/original-coast-clothing
 
-```node -v```
 
 
 
