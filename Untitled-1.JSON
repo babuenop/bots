@@ -39,7 +39,7 @@ curl -X POST -H "Content-Type: application/json" -d '{
         {
           "title": "Nuestros Productos",
           "type": "postback",
-          "payload": "PIZZAS_PAYLOAD"
+          "payload": "ABOUT_PAYLOAD"
         },
         {
           "type": "web_url",

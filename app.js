@@ -23,10 +23,16 @@ app.get('/webhook', function(req, response){
 app.post('/webhook/', function(req, response){
     const webhook_event = req.body.entry[0];
     if (webhook_event.messaging){
+          //console.log(typeof (webhook_event.messaging[0].message.text))
+          
+          console.log("-----Este es el event-------")
+          console.log(webhook_event.messaging[0].message.text)
+          //console.log (webhook_event.messaging)
         webhook_event.messaging.forEach(event =>{
+          //console.log(event)
             handleEvent(event.sender.id, event)
             // handleMessage (event) - la usabamos cuando estabamos enviando el mensaje que escribia el usuario.
-        })
+        }) 
     }
     response.sendStatus(200);
 })
@@ -39,8 +45,8 @@ function handleEvent(senderId, event){
 }
 
 function handleMessage(senderId, event){
-  if(event.text="Sistemas Fotovoltaicos"){
-      sistemaFotovoltaico(senderId)
+  if(event.text){
+      
   } else if(event.text="Curso Energia Renovable"){
       cursoEnergia(senderId)
   } else if(event.text){
@@ -77,7 +83,7 @@ function dpcEnergy(senderId) {
       },
   "messaging_type": "RESPONSE",
   "message":{
-    "text": "👋 Hola Soy Dayz, La energía solar ☀️ es una fuente de vida y origen de la mayoría de las demás formas de energía en la Tierra​. \n\nTenemos dos tipos de servicios: \n-Sistemas Fotovoltaicos para casas \n-Curso de Energia Renovable. \n\nPor favor selecciona cual deseas conocer:",
+    "text": "👋 Hola Soy Dayz, La energía solar ☀️ es una fuente de vida y origen de la mayoría de las demás formas de energía en la Tierra​. \n\nSelecciona el tipo de servicio que deseas conocer \n1️⃣ Sistemas Fotovoltaicos para casas \n2️⃣ Curso de Energia Renovable. \n\n",
     "quick_replies":[
       {
         "content_type":"text",
@@ -86,7 +92,7 @@ function dpcEnergy(senderId) {
         "image_url":"http://example.com/img/red.png"
       },{
         "content_type":"text",
-        "title":"📗Curso Energia Renovable",
+        "title":"Curso Energia Renovable",
         "payload":"<POSTBACK_PAYLOAD>",
         "image_url":"http://example.com/img/green.png"
       }
@@ -112,7 +118,6 @@ function sistemaFotovoltaico (senderId) {
                     {
                         "title": "☀️ DPC Energy",
                         "subtitle": "👋Sistema Fotovoltaico",
-                    
                         "buttons": [
                             {
                               "type": "postback",
@@ -150,7 +155,6 @@ function cursoEnergia (senderId) {
                     {
                         "title": "☀️ DPC Energy",
                         "subtitle": "📗Curso Energia Renovable",
-                    
                         "buttons": [
                             {
                               "type": "postback",
@@ -172,7 +176,6 @@ function cursoEnergia (senderId) {
   senderActions(senderId)
   callSendApi(messageData)
 } 
-
 
 function defaultMessage(senderId) { 
   console.log("Ingreso a default Message")
@@ -214,7 +217,8 @@ function handlePostback(senderId, payload){
       SistemaFotovoltaico(senderId)
     break
     case "COTIZACION_PAYLOAD":
-      
+      //Aqui debo desencadenar la funcion para cuando el usuario envia el payload de COTIZACION
+      showCotizador(senderId)
     break
     case "CONTACT_PAYLOAD":
       contactSupport(senderId)
@@ -249,12 +253,12 @@ function showDpc(senderId){
               "elements": [
                   {
                       "title": "DPC Energy",
-                      "subtitle": "👋Hola, Bienvenido a DPC Energy Empresa renovable para todos.",
-                      "image_url": "https://instagram.fpac1-2.fna.fbcdn.net/v/t51.2885-15/e35/117344835_3476442462368994_7519872707169913172_n.jpg?_nc_ht=instagram.fpac1-2.fna.fbcdn.net&_nc_cat=106&_nc_ohc=gOZ9ZzGZayIAX8MaGKD&tp=1&oh=7398e8889b1f473c47f64f16c5223081&oe=5FED8325",
+                      "subtitle": "👋Hola, Bienvenido a DPC Energy. Como podemos ayudarte? ",
+                      "image_url": "https://instagram.fpac1-2.fna.fbcdn.net/v/t51.2885-15/e35/117344835_3476442462368994_7519872707169913172_n.jpg?_nc_ht=instagram.fpac1-2.fna.fbcdn.net&_nc_cat=106&_nc_ohc=1xB3LXtiwrQAX8PsJXu&tp=1&oh=a56440bf0f3fe3904dd1d49d1aa52a73&oe=604091A5",
                       "buttons": [
                           {
                               "type": "postback",
-                              "title": "Nuestros Productos",
+                              "title": "Conocer los Productos",
                               "payload": "DPC_PAYLOAD",
                           },
                           {
@@ -277,6 +281,41 @@ function showDpc(senderId){
   callSendApi(messageData)
 }
 
+function showCotizador(senderId){
+  console.log("==========================> Cotizador DPC <=================================")
+  const messageData = {
+      "recipient":{
+        "id": senderId
+      },
+      "message": {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [
+                    {
+                        "title": "Elige tu proveedor",
+                  
+                        "buttons": [
+                            {
+                                "type": "postback",
+                                "title": "Soy ENSA",
+                                "payload": "ENSA_PAYLOAD",
+                            },
+                            {
+                              "type": "postback",
+                              "title": "Soy NATURGY",
+                              "payload": "NATURGY_PAYLOAD",
+                          },
+                        ]
+                    },
+                ]
+            }
+        }
+    }
+  }
+  callSendApi(messageData)
+}
 
 
 function showPizzas(senderId){
@@ -394,7 +433,6 @@ function callSendApi(response) {
 }
 
 
-
 /* Este bloque lo usamos al inicio para el manejo del mensaje inicial
  function handleMessage(event){
     const senderId = event.sender.id;
@@ -415,8 +453,6 @@ function callSendApi(response) {
 app.listen(app.get('port'), function(){
     console.log('Nuestro servidor esta funcionando correctamente', app.get('port'))
 })
-
-
 
 
 /*
